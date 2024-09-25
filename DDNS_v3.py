@@ -24,7 +24,17 @@ params = {
 import re
 
 import socket
+import requests as res
+
 def getipv6():
+    t= res.get("https://ipv6.icanhazip.com/").text.split("\n")[0]
+    return t
+
+def getipv6_2():
+    t= os.popen("curl ip.sb -6").read().split("\n")[0]
+    return t
+
+def getipv6_3():
     host_ipv6=[]
     ips=socket.getaddrinfo(socket.gethostname(),80)
     for ip in ips:
@@ -34,7 +44,7 @@ def getipv6():
     #240e 中国电信
     #        print(ip[4][0])
             host_ipv6.append(ip[4][0])
-    return host_ipv6
+    return host_ipv6[1]
 
 
 
@@ -49,7 +59,7 @@ def get_ip():
     # 获取IP地址
     try:
         #IPv6 = str(request.urlopen("https://api6.ipify.org").read().decode('utf8'))
-        IPv6=getipv6()[1]
+        IPv6=getipv6()
         if IPv6:
             print("获取IPv6成功,",IPv6)
             return IPv6
